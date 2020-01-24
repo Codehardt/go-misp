@@ -102,7 +102,7 @@ func TestSearchEvents(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	events, err := client.SearchEvents(nil, nil, "", "", "", "", false)
+	events, err := client.SearchEvents(nil, nil, "", "", "", "", false, nil, 0, 0)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type Client struct {
@@ -62,14 +64,17 @@ type Tag struct {
 }
 
 // SearchEvents queries the MISP for events
-func (c *Client) SearchEvents(tags, notTags []string, from, to, last, eventid string, metadata bool) (events []Event, err error) {
+func (c *Client) SearchEvents(tags, notTags []string, from, to, last, eventid string, metadata bool, timestamp *time.Time, limit, page int) (events []Event, err error) {
 	src := struct {
-		Tags     string `json:"tags,omitempty"`
-		From     string `json:"from,omitempty"`
-		To       string `json:"to,omitempty"`
-		Last     string `json:"last,omitempty"`
-		EventID  string `json:"eventid,omitempty"`
-		Metadata bool   `json:"metadata,omitempty"`
+		Tags      string `json:"tags,omitempty"`
+		From      string `json:"from,omitempty"`
+		To        string `json:"to,omitempty"`
+		Last      string `json:"last,omitempty"`
+		EventID   string `json:"eventid,omitempty"`
+		Metadata  bool   `json:"metadata,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+		Limit     string `json:"limit"`
+		Page      string `json:"page"`
 	}{
 		Tags:     chain(tags, notTags),
 		From:     from,
@@ -77,6 +82,13 @@ func (c *Client) SearchEvents(tags, notTags []string, from, to, last, eventid st
 		Last:     last,
 		EventID:  eventid,
 		Metadata: metadata,
+	}
+	if timestamp != nil {
+		src.Timestamp = strconv.FormatInt(timestamp.Unix(), 10)
+	}
+	if limit > 0 {
+		src.Limit = strconv.Itoa(limit)
+		src.Page = strconv.Itoa(page)
 	}
 	tgt := struct {
 		Response []struct {
