@@ -32,7 +32,7 @@ type Event struct {
 	ID            int64       `json:"id,string"`
 	Info          string      `json:"info"`
 	Date          string      `json:"date"`
-	ThreadLevelID int8        `json:"threat_level_id,string"`
+	ThreatLevelID int8        `json:"threat_level_id,string"`
 	Published     bool        `json:"published"`
 	Orgc          Org         `json:"Orgc"`
 	Attributes    []Attribute `json:"attribute"`

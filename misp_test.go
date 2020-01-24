@@ -110,7 +110,7 @@ func TestSearchEvents(t *testing.T) {
 		ID:            1488,
 		Info:          "Test Event",
 		Date:          "2020-01-22",
-		ThreadLevelID: 3,
+		ThreatLevelID: 3,
 		Published:     false,
 		Orgc: Org{
 			Name: "Test Org",
