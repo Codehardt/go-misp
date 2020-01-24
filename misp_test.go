@@ -107,22 +107,24 @@ func TestSearchEvents(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !reflect.DeepEqual(events, []Event{{
-		ID:            "1488",
+		ID:            1488,
 		Info:          "Test Event",
 		Date:          "2020-01-22",
-		ThreadLevelID: "3",
+		ThreadLevelID: 3,
 		Published:     false,
 		Orgc: Org{
 			Name: "Test Org",
 		},
 		Attributes: []Attribute{{
-			ID:      "193850",
+			ID:      193850,
 			Type:    "yara",
 			ToIDS:   true,
 			Value:   "rule Test {condition: uint16(0) == 0x5a4d}",
 			Deleted: false,
 		}},
 		Tag: []Tag{{
+			ID:      6,
+			Color:   "#140303",
 			Name:    "test_tag",
 			HideTag: false,
 		}},

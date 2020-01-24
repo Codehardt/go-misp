@@ -27,17 +27,12 @@ func New(httpClient *http.Client, baseURL string, auth string) (*Client, error) 
 	}, nil
 }
 
-// Events in MISP
-type Events struct {
-	Events []Event `json:"Event"`
-}
-
 // Event in MISP
 type Event struct {
-	ID            string      `json:"id"`
+	ID            int64       `json:"id,string"`
 	Info          string      `json:"info"`
 	Date          string      `json:"date"`
-	ThreadLevelID string      `json:"threat_level_id"`
+	ThreadLevelID int8        `json:"threat_level_id,string"`
 	Published     bool        `json:"published"`
 	Orgc          Org         `json:"Orgc"`
 	Attributes    []Attribute `json:"attribute"`
@@ -51,7 +46,7 @@ type Org struct {
 
 // Attribute of Event
 type Attribute struct {
-	ID      string `json:"id"`
+	ID      int64  `json:"id,string"`
 	Type    string `json:"type"`
 	ToIDS   bool   `json:"to_ids"`
 	Value   string `json:"value"`
@@ -60,7 +55,9 @@ type Attribute struct {
 
 // Tag of Event
 type Tag struct {
+	ID      int64  `json:"id,string"`
 	Name    string `json:"name"`
+	Color   string `json:"colour"`
 	HideTag bool   `json:"hide_tag"`
 }
 
