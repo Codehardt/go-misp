@@ -34,11 +34,12 @@ type Event struct {
 	ID            int64       `json:"id,string"`
 	Info          string      `json:"info"`
 	Date          string      `json:"date"`
-	Timestamp     string      `json:"timestamp"`
+	Timestamp     int64       `json:"timestamp,string"`
 	ThreatLevelID int8        `json:"threat_level_id,string"`
 	Published     bool        `json:"published"`
 	Orgc          Org         `json:"Orgc"`
-	Attributes    []Attribute `json:"attribute"`
+	Attributes    []Attribute `json:"Attribute"`
+	Objects       []Object    `json:"Object"`
 	Tag           []Tag       `json:"tag"`
 }
 
@@ -54,6 +55,12 @@ type Attribute struct {
 	ToIDS   bool   `json:"to_ids"`
 	Value   string `json:"value"`
 	Deleted bool   `json:"deleted"`
+}
+
+type Object struct {
+	ID         int64       `json:"id,string"`
+	Name       string      `json:"name"`
+	Attributes []Attribute `json:"Attribute"`
 }
 
 // Tag of Event
