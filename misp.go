@@ -3,6 +3,7 @@ package misp
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -168,12 +169,17 @@ func (c *Client) httpPost(path string, src interface{}, tgt interface{}) error {
 	return json.Unmarshal(b, tgt)
 }
 
+var ErrToManyRequests = errors.New("too many requests")
+
 func (c *Client) httpDo(req *http.Request) ([]byte, error) {
 	resp, err := c.hc.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode == 429 {
+		return nil, ErrToManyRequests
+	}
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		return nil, fmt.Errorf("http status %d", resp.StatusCode)
 	}
